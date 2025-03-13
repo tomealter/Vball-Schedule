@@ -5,11 +5,11 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Section from '../source/02-layouts/Section/Section';
 
-const title = 'Forum One Next.js Starter App';
+const title = 'BB Division 1 Schedule';
 
 export const metadata: Metadata = {
   title,
-  description: 'Next app using TypeScript and PostCSS',
+  description: 'Vball schedule for BB Division 1',
 };
 
 async function Home(): Promise<JSX.Element> {
