@@ -5,6 +5,7 @@ Overflow-x and width properties ensure elements using full bleed techniques
 body {
   background-color: var(--background-site);
   color: var(--text-primary);
+  font-size: var(--responsive-font-size-5);
   inline-size: 100%;
   margin: 0;
   overflow-x: hidden;

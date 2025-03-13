@@ -1,17 +1,18 @@
+import Poster from '@/source/03-components/Poster/Poster';
+import Image from 'next/image';
 import { JSX, ReactNode } from 'react';
 import { MAIN_ID } from '../../00-config/constants';
 import Main from '../../02-layouts/Main/Main';
-import Article from '../../03-components/Article/Article';
+import posterImage from '/public/images/anderson_spike.jpg';
 
 interface PageProps {
   mainId?: string;
-  title: string;
+  title?: string;
   children?: ReactNode;
   preContent?: ReactNode;
 }
 
 function Page({
-  title,
   children,
   mainId = MAIN_ID,
   preContent,
@@ -19,10 +20,18 @@ function Page({
   return (
     <>
       {preContent}
-      <Main id={mainId}>
-        <Article title={title} showFooter={false}>
-          {children}
-        </Article>
+      <Main id={mainId} hasConstrain={false}>
+        <Poster
+          image={
+            <Image
+              src={posterImage}
+              alt="Matt Anderson"
+              width={1280}
+              height={720}
+            />
+          }
+        />
+        {children}
       </Main>
     </>
   );

@@ -1,0 +1,32 @@
+@layer components {
+  .poster {
+    block-size: 100dvh;
+    inline-size: 100%;
+    inset: 0;
+    position: fixed;
+    z-index: -1;
+
+    &::after {
+      background: linear-gradient(
+        to bottom,
+        rgba(21 26 38 / 85%),
+        rgba(21 26 38 / 100%)
+      );
+      block-size: 100%;
+      content: '';
+      display: block;
+      inline-size: 100%;
+      inset: 0;
+      position: absolute;
+      z-index: 1;
+    }
+
+    img {
+      block-size: 100%;
+      inline-size: 100%;
+      mix-blend-mode: multiply;
+      object-fit: cover;
+      z-index: -1;
+    }
+  }
+}
