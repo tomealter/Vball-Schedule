@@ -186,10 +186,12 @@ function Schedule({ data, modifierClasses }: ScheduleProps) {
                         <div className={styles.time}>9PM</div>
                         {renderTeamNames(match.match_3)}
                       </div>
-                      <div className={styles.match}>
-                        <div className={styles.time}>10PM</div>
-                        {renderTeamNames(match.match_4)}
-                      </div>
+                      {renderTeamNames(match.match_4) && (
+                        <div className={styles.match}>
+                          <div className={styles.time}>10PM</div>
+                          {renderTeamNames(match.match_4)}
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <p>Playoffs TBD</p>
