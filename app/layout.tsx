@@ -2,6 +2,7 @@ import '../source/00-config/index.css';
 
 import jockeyOne from '@/source/01-global/fonts/jockey-one';
 import robotoCondensed from '@/source/01-global/fonts/roboto-condensed';
+import Footer from '@/source/02-layouts/Footer/Footer';
 import clsx from 'clsx';
 import { JSX, PropsWithChildren } from 'react';
 import '../source/01-global/index.css';
@@ -18,7 +19,10 @@ function RootLayout({ children }: PropsWithChildren): JSX.Element {
     >
       <body id="top">
         <Skiplink />
-        <SiteContainer>{children}</SiteContainer>
+        <SiteContainer>
+          {children}
+          <Footer tagline="Website by Tommy Alter" hasConstrain={false} />
+        </SiteContainer>
         <BackToTop text="Back to Top" topElement="top" />
       </body>
     </html>
