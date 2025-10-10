@@ -36,7 +36,7 @@ function TeamSelect({ teamList, modifierClasses }: TeamSelectProps) {
         className={styles['team-select']}
         classNamePrefix={styles['team-select']}
         id="team-select"
-        // menuIsOpen
+        isSearchable={false}
         classNames={{
           menu: () => 'menu',
           control: () => 'control',
