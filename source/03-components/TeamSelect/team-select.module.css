@@ -1,0 +1,44 @@
+/* TeamSelect Styles */
+
+@layer components {
+  .wrapper {
+    margin-block-end: var(--spacing-8);
+  }
+
+  .label {
+    display: block;
+    margin-block-end: 4px;
+  }
+
+  .team-select {
+    :global(.control) {
+      background-color: rgba(0 0 0 / 40%) !important;
+      border: solid 2px var(--brand-yellow-base) !important;
+      border-radius: 4px;
+      box-shadow: none !important;
+    }
+
+    :global(.single-value) {
+      color: var(--grayscale-white) !important;
+    }
+
+    :global(.menu-list) {
+      background-color: var(--grayscale-white) !important;
+      border-radius: 4px;
+      max-block-size: 80dvh !important;
+    }
+
+    :global(.option) {
+      background-color: var(--grayscale-white) !important;
+      color: var(--brand-blue-dark-1) !important;
+
+      &[class*='is-selected'] {
+        background-color: var(--brand-yellow-base) !important;
+      }
+    }
+
+    input {
+      color: var(--grayscale-white) !important;
+    }
+  }
+}

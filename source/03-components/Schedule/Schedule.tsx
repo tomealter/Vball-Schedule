@@ -3,10 +3,19 @@
 import Constrain from '@/source/02-layouts/Constrain/Constrain';
 import constrainStyles from '@/source/02-layouts/Constrain/constrain.module.css';
 import clsx from 'clsx';
-import { useMemo, useState } from 'react';
-import Select from 'react-select';
+import { createContext, useMemo, useState } from 'react';
 import Matches from '../Matches/Matches';
+import TeamSelect from '../TeamSelect/TeamSelect';
 import styles from './schedule.module.css';
+
+interface ActiveTeamContextType {
+  activeTeam: string | null;
+  setActiveTeam: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+export const ActiveTeamContext = createContext<
+  ActiveTeamContextType | undefined
+>(undefined);
 
 interface ScheduleProps {
   data: {
@@ -44,21 +53,23 @@ function Schedule({ data, modifierClasses }: ScheduleProps) {
     'NOVEMBER',
     'DECEMBER',
   ];
-  // const magicLine = useRef<HTMLDivElement>(null);
-  // const [dropDownOpen, setDropDownOpen] = useState(false);
 
   // Create list of teams
   const teamList = useMemo(() => {
     const teams = [] as string[];
-    for (let i = 2; i < 11; i++) {
+    for (let i = 2; i < 12; i++) {
       if (data.schedule[i][1] && data.schedule[i][2]) {
         teams.push(data.schedule[i][2]);
+      } else {
+        break;
       }
     }
     return teams;
   }, [data.schedule]);
 
-  const [activeTeam, setActiveTeam] = useState(teamList[0]);
+  const [activeTeam, setActiveTeam] = useState<string | null>(
+    teamList[0] || null,
+  );
 
   // Create schedule array
   data.schedule.map((row, index) => {
@@ -92,83 +103,54 @@ function Schedule({ data, modifierClasses }: ScheduleProps) {
     }
   });
   standings.sort(function (a, b) {
-    return b.wins - a.wins;
+    // First sort by wins (descending)
+    if (b.wins !== a.wins) {
+      return b.wins - a.wins;
+    }
+    // If wins are equal, sort by losses (ascending)
+    return a.losses - b.losses;
   });
 
   return (
-    <div className={clsx(styles.wrapper, modifierClasses)}>
-      <Constrain modifierClasses={constrainStyles['constrain--small']}>
-        <div className={styles.row}>
-          <div className={styles.left}>
-            <div className={styles.teams}>
-              <label htmlFor="#team-select">Select team</label>
-              <Select
-                options={teamList.map(team => ({ value: team, label: team }))}
-                defaultValue={{ value: teamList[0], label: teamList[0] }}
-                onChange={e => setActiveTeam(e?.value || '')}
-                className={styles['team-select']}
-                classNamePrefix={styles['team-select']}
-                id="team-select"
-              />
-              {/* <button
-                className={styles['teams-dropdown']}
-                aria-expanded={dropDownOpen ? 'true' : 'false'}
-                onClick={
-                  dropDownOpen
-                    ? () => setDropDownOpen(false)
-                    : () => setDropDownOpen(true)
-                }
-              >
-                {activeTeam}
-                <SvgAngleDown />
-              </button> */}
-              {/* <h2 className={styles.title}>Teams</h2> */}
-              {/* <ul aria-hidden={dropDownOpen ? 'false' : 'true'}>
-                {teamList.map((team, index) => (
-                  <li key={index}>
-                    <button
-                      className={styles.team}
-                      data-active={team === activeTeam ? 'true' : 'false'}
-                      onClick={() => {
-                        setActiveTeam(team);
-                        setDropDownOpen(false);
-                      }}
+    <ActiveTeamContext.Provider value={{ activeTeam, setActiveTeam }}>
+      <div className={clsx(styles.wrapper, modifierClasses)}>
+        <Constrain modifierClasses={constrainStyles['constrain--small']}>
+          <div className={styles.row}>
+            <div className={styles.left}>
+              <TeamSelect teamList={teamList} />
+              <div className={styles.standings}>
+                <h2 className={styles.title}>Standings</h2>
+                <ul>
+                  {standings.map((team, index) => (
+                    <li
+                      className={clsx(styles['standings-item'], {
+                        [styles['team-active']]: team.team === activeTeam,
+                      })}
+                      key={index}
                     >
-                      {team}
-                    </button>
-                  </li>
-                ))}
-                <div className={styles.line} ref={magicLine}></div>
-              </ul> */}
+                      <div className={styles['standings-team']}>
+                        {team.team}
+                      </div>
+                      <div className={styles['standings-record']}>
+                        ({team.wins} - {team.losses})
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <div className={styles.standings}>
-              <h2 className={styles.title}>Standings</h2>
-              {/* <button className={styles['standings-dropdown']}>
-                Standings
-              </button> */}
-              <ul>
-                {standings.map((team, index) => (
-                  <li className={styles['standings-item']} key={index}>
-                    <div className={styles['standings-team']}>{team.team}</div>
-                    <div className={styles['standings-record']}>
-                      ({team.wins} - {team.losses})
-                    </div>
-                  </li>
-                ))}
-              </ul>
+            <div className={styles.right}>
+              <h2 className={styles.title}>Schedule</h2>
+              <Matches
+                data={schedule}
+                activeTeam={activeTeam || ''}
+                teamList={teamList}
+              />
             </div>
           </div>
-          <div className={styles.right}>
-            <h2 className={styles.title}>Schedule</h2>
-            <Matches
-              data={schedule}
-              activeTeam={activeTeam}
-              teamList={teamList}
-            />
-          </div>
-        </div>
-      </Constrain>
-    </div>
+        </Constrain>
+      </div>
+    </ActiveTeamContext.Provider>
   );
 }
 

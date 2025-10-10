@@ -1,3 +1,5 @@
+@import 'mixins';
+
 @layer components {
   .row {
     @media (--tablet-lg) {
@@ -47,6 +49,36 @@
       svg {
         transform: rotate(180deg);
       }
+    }
+  }
+
+  .team-select {
+    :global(.control) {
+      background-color: transparent !important;
+      border: solid 2px var(--brand-yellow-base) !important;
+      border-radius: 4px;
+      box-shadow: none !important;
+    }
+
+    :global(.single-value) {
+      color: var(--grayscale-white) !important;
+    }
+
+    :global(.menu-list) {
+      background-color: var(--grayscale-white) !important;
+      max-block-size: 80dvh !important;
+    }
+
+    :global(.option) {
+      color: var(--brand-blue-dark-1) !important;
+
+      &[class*='is-selected'] {
+        background-color: var(--brand-yellow-base) !important;
+      }
+    }
+
+    input {
+      color: var(--grayscale-white) !important;
     }
   }
 
@@ -167,6 +199,11 @@
   font-weight: 400;
   gap: var(--spacing-1-5);
   letter-spacing: 1px;
+
+  &.team-active {
+    color: var(--brand-yellow-base);
+    font-weight: 700;
+  }
 }
 
 .standings-record {

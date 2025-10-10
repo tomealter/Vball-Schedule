@@ -28,7 +28,9 @@ async function Home(): Promise<JSX.Element> {
   };
 
   // Get Schedule Data
-  const responseSchedule = await fetch(scheduleUrl);
+  const responseSchedule = await fetch(scheduleUrl, {
+    cache: 'no-store', // Disable caching to get fresh data
+  });
   if (!responseSchedule.ok) {
     throw new Error('Network response was not ok');
   }
@@ -36,7 +38,9 @@ async function Home(): Promise<JSX.Element> {
   const dataSchedule: JSONResponse = jsonResponseSchedule;
 
   // Get Standings Data
-  const responseStandings = await fetch(standingsUrl);
+  const responseStandings = await fetch(standingsUrl, {
+    cache: 'no-store', // Disable caching to get fresh data
+  });
   if (!responseStandings.ok) {
     throw new Error('Network response was not ok');
   }
