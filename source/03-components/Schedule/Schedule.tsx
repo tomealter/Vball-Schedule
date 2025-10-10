@@ -3,7 +3,7 @@
 import Constrain from '@/source/02-layouts/Constrain/Constrain';
 import constrainStyles from '@/source/02-layouts/Constrain/constrain.module.css';
 import clsx from 'clsx';
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 import Matches from '../Matches/Matches';
 import TeamSelect from '../TeamSelect/TeamSelect';
 import styles from './schedule.module.css';
@@ -70,6 +70,23 @@ function Schedule({ data, modifierClasses }: ScheduleProps) {
   const [activeTeam, setActiveTeam] = useState<string | null>(
     teamList[0] || null,
   );
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Handle hydration and localStorage
+  useEffect(() => {
+    setIsHydrated(true);
+    const stored = localStorage.getItem('activeTeam');
+    if (stored && teamList.includes(stored)) {
+      setActiveTeam(stored);
+    }
+  }, [teamList]);
+
+  // Save to localStorage whenever activeTeam changes (but only after hydration)
+  useEffect(() => {
+    if (isHydrated && activeTeam) {
+      localStorage.setItem('activeTeam', activeTeam);
+    }
+  }, [activeTeam, isHydrated]);
 
   // Create schedule array
   data.schedule.map((row, index) => {
