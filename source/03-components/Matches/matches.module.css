@@ -1,0 +1,105 @@
+@layer components {
+  .matches {
+    padding-inline-start: 0;
+  }
+
+  .matches-item {
+    display: flex;
+    flex-direction: column;
+    margin-block-end: var(--spacing-8);
+
+    @media (--tablet) {
+      flex-direction: row;
+      gap: var(--spacing-2);
+      margin-block-end: var(--spacing-5);
+    }
+  }
+
+  .date {
+    display: flex;
+    flex-direction: column;
+    letter-spacing: 1px;
+    padding-block-end: var(--spacing-1-5);
+
+    @media (--tablet) {
+      flex: 70px 0 0;
+    }
+  }
+
+  .month {
+    line-height: 1;
+  }
+
+  .day {
+    color: var(--brand-yellow-base);
+    font-family: var(--font-family-heading);
+    font-size: var(--responsive-font-size-14);
+    line-height: 1;
+  }
+
+  .games {
+    background-color: rgba(21 26 38 / 70%);
+    border: solid 1px var(--grayscale-white);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .game {
+    align-items: center;
+    border-top: solid 1px var(--grayscale-white);
+    display: flex;
+    flex-direction: column;
+    font-weight: 300;
+    letter-spacing: 1px;
+    padding-block-end: var(--spacing-3);
+
+    &:first-child {
+      border-top: 0;
+    }
+  }
+
+  .time {
+    background-color: var(--grayscale-white);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 0.5rem) 100%, 0.5rem 100%);
+    color: var(--brand-blue-dark-1);
+    display: inline-block;
+    font-size: var(--font-size-3);
+    font-weight: 500;
+    inline-size: 65px;
+    position: relative;
+    text-align: center;
+    top: -1px;
+
+    @media (--desktop) {
+      inline-size: 100px;
+    }
+  }
+
+  .teams {
+    align-items: center;
+    display: flex;
+    inline-size: 100%;
+    justify-content: space-between;
+    padding-block-start: var(--spacing-0-5);
+  }
+
+  .team {
+    font-size: var(--responsive-font-size-2);
+    font-weight: 400;
+    inline-size: 40%;
+    line-height: 1.1;
+    text-align: center;
+    transition: color 350ms ease-in-out;
+
+    &[data-active='true'] {
+      color: var(--brand-yellow-base);
+      font-weight: 700;
+    }
+
+    @media (--tablet) {
+      font-size: var(--responsive-font-size-4);
+    }
+  }
+}

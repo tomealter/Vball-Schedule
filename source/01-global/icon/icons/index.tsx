@@ -31,6 +31,9 @@ const Icons = {
   Rss: dynamic(() => import('./Rss'), {
     loading: () => <svg className="icon"></svg>,
   }),
+  TaLogo: dynamic(() => import('./TaLogo'), {
+    loading: () => <svg className="icon"></svg>,
+  }),
   Twitter: dynamic(() => import('./Twitter'), {
     loading: () => <svg className="icon"></svg>,
   }),

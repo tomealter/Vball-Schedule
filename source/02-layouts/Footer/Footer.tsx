@@ -1,18 +1,19 @@
+import SvgTaLogo from '@/source/01-global/icon/icons/TaLogo';
 import clsx from 'clsx';
 import { ConstrainComponent } from 'gesso';
-import { JSX, ReactNode } from 'react';
+import { JSX } from 'react';
 import Constrain from '../Constrain/Constrain';
 import styles from './footer.module.css';
 
 interface FooterProps extends ConstrainComponent {
-  children?: ReactNode;
+  tagline?: string;
 }
 
 function Footer({
-  children,
   hasConstrain = true,
   modifierClasses,
   constrainClasses,
+  tagline,
 }: FooterProps): JSX.Element {
   return (
     <footer
@@ -20,7 +21,12 @@ function Footer({
       role="contentinfo"
     >
       <Constrain isHidden={!hasConstrain} modifierClasses={constrainClasses}>
-        <div className={styles.inner}>{children}</div>
+        <div className={styles.inner}>
+          <div className={styles.left}>
+            <SvgTaLogo modifierClasses={styles.logo} />
+            <p className={styles.tagline}>{tagline}</p>
+          </div>
+        </div>
       </Constrain>
     </footer>
   );

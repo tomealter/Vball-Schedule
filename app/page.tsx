@@ -13,23 +13,46 @@ export const metadata: Metadata = {
 };
 
 async function Home(): Promise<JSX.Element> {
-  // Replace with your actual Spreadsheet ID
-  const spreadsheetId = '1CdwnKb394xGY1zXjzD08yXFic3ors5OuIveANI_sG80';
-  const spreadsheetTab = '2017';
-  // Replace with your API Key
   const apiKey = 'AIzaSyC2LSKa6M1fv1W8VjNnI5six6NkssnTHK4';
+  const scheduleId = '1CdwnKb394xGY1zXjzD08yXFic3ors5OuIveANI_sG80';
+  const scheduleTab = '2017';
+  const standingsId = '1ty9qCmpMiZ_CtS9HWDrs8pX4MdmFvARMxYpIm3Zd3E4';
+  const standingsTab = 'Scores';
+
   // Construct the URL for Google Sheets API v4
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${spreadsheetTab}?key=${apiKey}`;
+  const scheduleUrl = `https://sheets.googleapis.com/v4/spreadsheets/${scheduleId}/values/${scheduleTab}?key=${apiKey}`;
+  const standingsUrl = `https://sheets.googleapis.com/v4/spreadsheets/${standingsId}/values/${standingsTab}?key=${apiKey}`;
+
   type JSONResponse = {
     values: string[][];
   };
 
-  const response = await fetch(url);
-  if (!response.ok) {
+  // Get Schedule Data
+  const responseSchedule = await fetch(scheduleUrl, {
+    cache: 'no-store', // Disable caching to get fresh data
+  });
+  if (!responseSchedule.ok) {
     throw new Error('Network response was not ok');
   }
-  const jsonResponse = (await response.json()) as JSONResponse;
-  const data: JSONResponse = jsonResponse;
+  const jsonResponseSchedule = (await responseSchedule.json()) as JSONResponse;
+  const dataSchedule: JSONResponse = jsonResponseSchedule;
+
+  // Get Standings Data
+  const responseStandings = await fetch(standingsUrl, {
+    cache: 'no-store', // Disable caching to get fresh data
+  });
+  if (!responseStandings.ok) {
+    throw new Error('Network response was not ok');
+  }
+  const jsonResponseStandings =
+    (await responseStandings.json()) as JSONResponse;
+  const dataStandings: JSONResponse = jsonResponseStandings;
+
+  // Create a combined data object
+  const totalData = {
+    schedule: dataSchedule.values,
+    standings: dataStandings.values,
+  };
 
   return (
     <Page>
@@ -46,12 +69,12 @@ async function Home(): Promise<JSX.Element> {
             </Link>
             .
             <br />
-            Hit up Tommy, if you see discrepancies.
+            Hit up Tommy if you see discrepancies.
           </p>
         }
       />
       <Section>
-        <Schedule data={data} />
+        <Schedule data={totalData} />
       </Section>
     </Page>
   );

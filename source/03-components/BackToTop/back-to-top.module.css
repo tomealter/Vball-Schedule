@@ -8,7 +8,7 @@
 
     @media (--mobile-lg) {
       align-items: center;
-      background-color: var(--grayscale-gray-3);
+      background-color: var(--brand-blue-dark-2);
       block-size: rem-convert(70px);
       border-radius: 50%;
       display: flex;
