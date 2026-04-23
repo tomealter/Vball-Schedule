@@ -22,16 +22,16 @@ function OverlayMenu({
   const [isOpen, setIsOpen] = useState(false);
   const navId = useId();
   const navRef = useRef<HTMLElement>(null);
-  const focusableElements = navRef.current?.querySelectorAll<HTMLElement>(
-    focusableElementsString,
-  );
 
   const handleKeydown = useCallback(
     (event: KeyboardEvent) => {
+      const focusable = navRef.current?.querySelectorAll<HTMLElement>(
+        focusableElementsString,
+      );
       // Trap focus within the menu
-      if (focusableElements) {
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
+      if (focusable && focusable.length > 0) {
+        const firstElement = focusable[0];
+        const lastElement = focusable[focusable.length - 1];
 
         if (event.key === 'Tab') {
           if (event.shiftKey && document.activeElement === firstElement) {
@@ -51,13 +51,15 @@ function OverlayMenu({
         setIsOpen(false);
       }
     },
-    [focusableElements],
+    [],
   );
 
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add('has-open-menu');
-      const firstElement = focusableElements && focusableElements[0];
+      const firstElement = navRef.current?.querySelectorAll<HTMLElement>(
+        focusableElementsString,
+      )?.[0];
       firstElement?.focus();
       window.addEventListener('keydown', handleKeydown);
     } else {
@@ -73,7 +75,7 @@ function OverlayMenu({
       document.body.classList.remove('has-open-menu');
       window.removeEventListener('keydown', handleKeydown);
     };
-  }, [isOpen, navId, focusableElements, handleKeydown]);
+  }, [isOpen, navId, handleKeydown]);
 
   return (
     <>

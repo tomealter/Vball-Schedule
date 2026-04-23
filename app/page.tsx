@@ -1,6 +1,7 @@
 import PageTitle from '@/source/03-components/PageTitle/PageTitle';
 import Schedule from '@/source/03-components/Schedule/Schedule';
 import Page from '@/source/04-templates/Page/Page';
+import { JSX } from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Section from '../source/02-layouts/Section/Section';

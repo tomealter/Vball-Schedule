@@ -38,7 +38,7 @@ function Accordion({
     })),
   );
   const accordionItemRefs = useMemo(() => {
-    const refs: { [key: string]: React.RefObject<HTMLButtonElement> } = {};
+    const refs: { [key: string]: React.RefObject<HTMLButtonElement | null> } = {};
     accordionItemsStatus.forEach(item => (refs[item.id] = createRef()));
     return refs;
   }, [accordionItemsStatus]);

@@ -4,7 +4,6 @@
 // See the project documentation for more information.
 // tslint:disable:ordered-imports
 import clsx from 'clsx';
-import * as React from 'react';
 import type { SVGProps } from 'react';
 interface SVGRProps {
   title?: string;

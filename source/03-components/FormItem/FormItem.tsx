@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { GessoComponent } from 'gesso';
 import {
   HTMLInputTypeAttribute,
+  JSX,
   InputHTMLAttributes,
   ReactNode,
   SelectHTMLAttributes,

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { GessoComponent } from 'gesso';
-import { ComponentProps } from 'react';
+import { ComponentProps, JSX } from 'react';
 import styles from './hamburger-button.module.css';
 
 interface HamburgerButtonProps

@@ -17,12 +17,19 @@ rules:
         - 'mixin'
         - 'each'
         - 'content'
+  at-rule-prelude-no-invalid: null
   block-no-empty: null
+  color-function-alias-notation: null
   color-named:
     - never
     - ignore:
         - 'inside-function'
+  container-name-pattern: null
   custom-property-empty-line-before: null
+  declaration-property-value-no-unknown:
+    - true
+    - ignoreProperties:
+        '/.+/': '/rem-convert|\$/'
   function-no-unknown:
     - true
     - ignoreFunctions:
@@ -31,7 +38,10 @@ rules:
         - 'responsive-font-size'
         - 'rem-convert'
   import-notation: string
+  layer-name-pattern: null
   max-nesting-depth: 4
+  nesting-selector-no-missing-scoping-root: null
+  no-invalid-position-declaration: null
   number-max-precision: null
   order/order:
     - - type: at-rule
@@ -41,6 +51,7 @@ rules:
     - unspecified: ignore
       disableFix: true
   order/properties-alphabetical-order: error
+  property-no-deprecated: null
   property-no-unknown:
     - true
     - ignoreProperties:

@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { useContext } from 'react';
+import { useContext, useId } from 'react';
 import Select from 'react-select';
 import { ActiveTeamContext } from '../Schedule/Schedule';
 import styles from './team-select.module.css';
@@ -12,6 +12,7 @@ interface TeamSelectProps {
 }
 
 function TeamSelect({ teamList, modifierClasses }: TeamSelectProps) {
+  const selectId = useId();
   const context = useContext(ActiveTeamContext);
 
   if (!context) {
@@ -28,6 +29,7 @@ function TeamSelect({ teamList, modifierClasses }: TeamSelectProps) {
         Select Team
       </label>
       <Select
+        instanceId={selectId}
         options={teamList.map(team => ({ value: team, label: team }))}
         value={activeTeam ? { value: activeTeam, label: activeTeam } : null}
         onChange={selectedOption =>

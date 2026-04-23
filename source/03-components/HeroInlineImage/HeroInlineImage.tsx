@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { GessoComponent } from 'gesso';
-import { ReactNode } from 'react';
+import { JSX, ReactNode } from 'react';
 import { LinkButton, LinkProps } from '../Button/Button';
 import styles from './hero-inline-image.module.css';
 

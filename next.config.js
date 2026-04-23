@@ -5,9 +5,6 @@ const StylelintWebpackPlugin = require('stylelint-webpack-plugin');
 module.exports = {
   reactStrictMode: true,
   basePath,
-  eslint: {
-    dirs: ['source', 'app'],
-  },
   /**
    * Custom Webpack Config
    * https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config
