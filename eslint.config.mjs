@@ -22,6 +22,16 @@ const config = defineConfig([
     },
   },
   {
+    files: ['**/*.stories.tsx', '**/*Args.tsx'],
+    rules: {
+      '@next/next/no-img-element': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+    },
+  },
+  {
     files: ['next.config.js'],
     rules: {
       '@typescript-eslint/no-var-requires': 'off',
