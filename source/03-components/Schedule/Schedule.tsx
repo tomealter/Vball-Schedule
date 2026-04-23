@@ -70,23 +70,22 @@ function Schedule({ data, modifierClasses }: ScheduleProps) {
   const [activeTeam, setActiveTeam] = useState<string | null>(
     teamList[0] || null,
   );
-  const [isHydrated, setIsHydrated] = useState(false);
 
-  // Handle hydration and localStorage
+  // Restore persisted team selection after hydration
   useEffect(() => {
-    setIsHydrated(true);
     const stored = localStorage.getItem('activeTeam');
     if (stored && teamList.includes(stored)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveTeam(stored);
     }
   }, [teamList]);
 
-  // Save to localStorage whenever activeTeam changes (but only after hydration)
+  // Save to localStorage whenever activeTeam changes
   useEffect(() => {
-    if (isHydrated && activeTeam) {
+    if (activeTeam) {
       localStorage.setItem('activeTeam', activeTeam);
     }
-  }, [activeTeam, isHydrated]);
+  }, [activeTeam]);
 
   // Create schedule array
   data.schedule.map((row, index) => {

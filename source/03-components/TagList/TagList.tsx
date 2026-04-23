@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { GessoComponent } from 'gesso';
 import Tag, { TagProps } from '../Tag/Tag';
 import styles from './tag-list.module.css';
+import { JSX } from 'react';
 
 interface TagListProps extends GessoComponent {
   items: TagProps[];

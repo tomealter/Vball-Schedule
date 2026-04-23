@@ -30,6 +30,34 @@ function Modal({
   const generatedId = useId();
   const modalId = id || generatedId;
 
+  // Function to show modal
+  const openModal = () => {
+    const modal = dialogRef.current;
+    if (!modal) return;
+
+    modal.showModal();
+
+    // Turn off scrolling on the body
+    document.body.classList.add('has-open-modal');
+
+    const event = new CustomEvent('openmodal');
+    modal.dispatchEvent(event);
+  };
+
+  // Function to close modal
+  const closeModal = () => {
+    const modal = dialogRef.current;
+    if (!modal) return;
+
+    modal.close();
+
+    // Turn on scrolling on the body
+    document.body.classList.remove('has-open-modal');
+
+    const event = new CustomEvent('closemodal');
+    modal.dispatchEvent(event);
+  };
+
   useEffect(() => {
     if (defaultOpen) {
       openModal();
@@ -90,34 +118,6 @@ function Modal({
       event.preventDefault();
       closeModal();
     }
-  };
-
-  // Function to show modal
-  const openModal = () => {
-    const modal = dialogRef.current;
-    if (!modal) return;
-
-    modal.showModal();
-
-    // Turn off scrolling on the body
-    document.body.classList.add('has-open-modal');
-
-    const event = new CustomEvent('openmodal');
-    modal.dispatchEvent(event);
-  };
-
-  // Function to close modal
-  const closeModal = () => {
-    const modal = dialogRef.current;
-    if (!modal) return;
-
-    modal.close();
-
-    // Turn on scrolling on the body
-    document.body.classList.remove('has-open-modal');
-
-    const event = new CustomEvent('closemodal');
-    modal.dispatchEvent(event);
   };
 
   return (

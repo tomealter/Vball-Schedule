@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { GessoComponent } from 'gesso';
 import Link from 'next/link';
 import styles from './read-more-link.module.css';
+import { JSX } from 'react';
 
 interface ReadMoreLinkProps extends GessoComponent {
   url: string;

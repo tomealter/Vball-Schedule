@@ -20,7 +20,7 @@ interface AccordionItemProps extends GessoComponent {
   isOpen?: boolean;
   isStepList?: boolean;
   accordionSpeed?: string;
-  toggleRef?: RefObject<HTMLButtonElement>;
+  toggleRef?: RefObject<HTMLButtonElement | null>;
   handleClick?: MouseEventHandler;
 }
 
