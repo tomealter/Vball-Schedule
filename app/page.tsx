@@ -14,11 +14,12 @@ export const metadata: Metadata = {
 };
 
 async function Home(): Promise<JSX.Element> {
-  const apiKey = 'AIzaSyC2LSKa6M1fv1W8VjNnI5six6NkssnTHK4';
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_SHEETS_API_KEY;
   const scheduleId = '1CdwnKb394xGY1zXjzD08yXFic3ors5OuIveANI_sG80';
   const scheduleTab = '2017';
   const standingsId = '1ty9qCmpMiZ_CtS9HWDrs8pX4MdmFvARMxYpIm3Zd3E4';
   const standingsTab = 'Scores';
+  console.log("My key is:", process.env.NEXT_PUBLIC_GOOGLE_SHEETS_API_KEY);
 
   // Construct the URL for Google Sheets API v4
   const scheduleUrl = `https://sheets.googleapis.com/v4/spreadsheets/${scheduleId}/values/${scheduleTab}?key=${apiKey}`;
