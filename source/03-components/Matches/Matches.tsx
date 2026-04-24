@@ -1,13 +1,10 @@
+import type { ParsedMatch } from '@/app/page';
 import styles from './matches.module.css';
 
+const GAME_TIMES = ['7PM', '8PM', '9PM', '10PM'];
+
 interface MatchesProps {
-  data: {
-    date: string;
-    match_1: string;
-    match_2: string;
-    match_3: string;
-    match_4: string;
-  }[];
+  data: ParsedMatch[];
   activeTeam: string;
   teamList: string[];
 }
@@ -62,31 +59,15 @@ function Matches({ data, activeTeam, teamList }: MatchesProps) {
       {data.map((match, index) => (
         <li className={styles['matches-item']} key={index}>
           {renderDate(match.date)}
-          {match.match_1 || match.match_2 || match.match_3 || match.match_4 ? (
+          {match.matches.some(Boolean) ? (
             <div className={styles.games}>
-              {renderTeamNames(match.match_1) && (
-                <div className={styles.game}>
-                  <div className={styles.time}>7PM</div>
-                  {renderTeamNames(match.match_1)}
-                </div>
-              )}
-              {renderTeamNames(match.match_2) && (
-                <div className={styles.game}>
-                  <div className={styles.time}>8PM</div>
-                  {renderTeamNames(match.match_2)}
-                </div>
-              )}
-              {renderTeamNames(match.match_3) && (
-                <div className={styles.game}>
-                  <div className={styles.time}>9PM</div>
-                  {renderTeamNames(match.match_3)}
-                </div>
-              )}
-              {renderTeamNames(match.match_4) && (
-                <div className={styles.game}>
-                  <div className={styles.time}>10PM</div>
-                  {renderTeamNames(match.match_4)}
-                </div>
+              {match.matches.map((m, i) =>
+                renderTeamNames(m) ? (
+                  <div className={styles.game} key={i}>
+                    <div className={styles.time}>{GAME_TIMES[i]}</div>
+                    {renderTeamNames(m)}
+                  </div>
+                ) : null,
               )}
             </div>
           ) : (
