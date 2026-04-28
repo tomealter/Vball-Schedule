@@ -1,4 +1,4 @@
-import type { ParsedMatch } from '@/app/page';
+import type { ParsedMatch, ParsedStanding } from '@/app/page';
 import styles from './matches.module.css';
 
 const GAME_TIMES = ['7PM', '8PM', '9PM', '10PM'];
@@ -7,9 +7,12 @@ interface MatchesProps {
   data: ParsedMatch[];
   activeTeam: string;
   teamList: string[];
+  standings: ParsedStanding[];
 }
 
-function Matches({ data, activeTeam, teamList }: MatchesProps) {
+function Matches({ data, activeTeam, teamList, standings }: MatchesProps) {
+  const standingsMap = Object.fromEntries(standings.map(s => [s.team, s.weeklyWins]));
+
   // Function to render date
   const renderDate = (date: string) => {
     const dateSplit = date.split(' ');
@@ -26,12 +29,16 @@ function Matches({ data, activeTeam, teamList }: MatchesProps) {
     );
   };
 
-  // Function to return team names from match data
-  const renderTeamNames = (match: string) => {
+  // Function to return team names and score from match data
+  const renderTeamNames = (match: string, weekIndex: number) => {
     if (match) {
       const strSplit = match.split(' ');
       const team_1 = teamList[parseInt(strSplit[0]) - 1];
       const team_2 = teamList[parseInt(strSplit[2]) - 1];
+
+      const team1Wins = standingsMap[team_1]?.[weekIndex];
+      const team2Wins = standingsMap[team_2]?.[weekIndex];
+      const hasScore = team1Wins !== undefined && team2Wins !== undefined;
 
       return (
         <div className={styles['teams']}>
@@ -40,12 +47,22 @@ function Matches({ data, activeTeam, teamList }: MatchesProps) {
             data-active={team_1 === activeTeam ? 'true' : 'false'}
           >
             {team_1}
+            {hasScore && (
+              <div className={styles['score']}>
+                {team1Wins} - {team2Wins}
+              </div>
+            )}
           </div>
           <div
             className={styles['team']}
             data-active={team_2 === activeTeam ? 'true' : 'false'}
           >
             {team_2}
+            {hasScore && (
+              <div className={styles.score}>
+                {team2Wins} - {team1Wins}
+              </div>
+            )}
           </div>
         </div>
       );
@@ -62,10 +79,10 @@ function Matches({ data, activeTeam, teamList }: MatchesProps) {
           {match.matches.some(Boolean) ? (
             <div className={styles.games}>
               {match.matches.map((m, i) =>
-                renderTeamNames(m) ? (
+                renderTeamNames(m, match.weekIndex) ? (
                   <div className={styles.game} key={i}>
                     <div className={styles.time}>{GAME_TIMES[i]}</div>
-                    {renderTeamNames(m)}
+                    {renderTeamNames(m, match.weekIndex)}
                   </div>
                 ) : null,
               )}

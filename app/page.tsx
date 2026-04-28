@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 export interface ParsedMatch {
   date: string;
+  weekIndex: number;
   matches: string[];
 }
 
@@ -22,6 +23,7 @@ export interface ParsedStanding {
   team: string;
   wins: number;
   losses: number;
+  weeklyWins: (number | undefined)[];
 }
 
 const MONTHS = new Set([
@@ -53,12 +55,14 @@ function parseTeamList(rows: string[][]): string[] {
 
 function parseSchedule(rows: string[][]): ParsedMatch[] {
   const schedule: ParsedMatch[] = [];
+  let weekIndex = 0;
   rows.forEach((row, index) => {
     if (row[1] && MONTHS.has(row[1].split(' ')[0])) {
       for (let i = 0; i <= 3; i++) {
         if (row[i]) {
           schedule.push({
             date: row[i],
+            weekIndex: weekIndex++,
             matches: [
               rows[index + 2]?.[i] ?? '',
               rows[index + 3]?.[i] ?? '',
@@ -77,10 +81,19 @@ function parseStandings(rows: string[][], teamList: string[]): ParsedStanding[] 
   const standings: ParsedStanding[] = [];
   rows.forEach(row => {
     if (teamList.includes(row[1])) {
+      // Cols: [num, name, g1wins, g1losses, g2wins, g2losses, ..., totalWins, totalLosses]
+      // Game week pairs start at index 2; last two cols are totals
+      const numGameWeeks = Math.floor((row.length - 4) / 2);
+      const weeklyWins: (number | undefined)[] = [];
+      for (let g = 0; g < numGameWeeks; g++) {
+        const val = row[2 + g * 2];
+        weeklyWins.push(val !== undefined && val !== '' ? parseInt(val, 10) : undefined);
+      }
       standings.push({
         team: row[1],
         wins: parseInt(row[row.length - 2], 10),
         losses: parseInt(row[row.length - 1], 10),
+        weeklyWins,
       });
     }
   });
