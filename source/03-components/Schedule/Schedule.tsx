@@ -84,6 +84,7 @@ function Schedule({ data, modifierClasses }: ScheduleProps) {
                 data={schedule}
                 activeTeam={activeTeam || ''}
                 teamList={teamList}
+                standings={standings}
               />
             </div>
           </div>

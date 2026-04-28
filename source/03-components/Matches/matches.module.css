@@ -102,4 +102,10 @@
       font-size: var(--responsive-font-size-4);
     }
   }
+
+  .score {
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-regular);
+    margin-block-start: var(--spacing-0-5);
+  }
 }
