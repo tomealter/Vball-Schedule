@@ -11,6 +11,8 @@
   }
 
   .team-select {
+    @mixin focus var(--brand-yellow-base);
+
     :global(.control) {
       background-color: rgba(0 0 0 / 40%) !important;
       border: solid 2px var(--brand-yellow-base) !important;
@@ -33,6 +35,7 @@
       background-color: var(--grayscale-white) !important;
       color: var(--brand-blue-dark-1) !important;
       cursor: pointer !important;
+      transition: background-color 150ms ease;
 
       &[class*='is-focused'] {
         background-color: var(--brand-yellow-light) !important;
