@@ -16,6 +16,7 @@
       border: solid 2px var(--brand-yellow-base) !important;
       border-radius: 4px;
       box-shadow: none !important;
+      cursor: pointer !important;
     }
 
     :global(.single-value) {
@@ -31,6 +32,7 @@
     :global(.option) {
       background-color: var(--grayscale-white) !important;
       color: var(--brand-blue-dark-1) !important;
+      cursor: pointer !important;
 
       &[class*='is-selected'] {
         background-color: var(--brand-yellow-base) !important;
