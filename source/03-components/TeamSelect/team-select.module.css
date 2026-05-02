@@ -11,11 +11,19 @@
   }
 
   .team-select {
+    &:has(:focus-visible) {
+      :global(.control) {
+        outline: 2px solid var(--brand-yellow-base) !important;
+        outline-offset: 2px;
+      }
+    }
+
     :global(.control) {
       background-color: rgba(0 0 0 / 40%) !important;
       border: solid 2px var(--brand-yellow-base) !important;
       border-radius: 4px;
       box-shadow: none !important;
+      cursor: pointer !important;
     }
 
     :global(.single-value) {
@@ -31,6 +39,11 @@
     :global(.option) {
       background-color: var(--grayscale-white) !important;
       color: var(--brand-blue-dark-1) !important;
+      cursor: pointer !important;
+
+      &[class*='is-focused'] {
+        background-color: var(--brand-yellow-light) !important;
+      }
 
       &[class*='is-selected'] {
         background-color: var(--brand-yellow-base) !important;
