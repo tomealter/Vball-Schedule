@@ -7,8 +7,8 @@
   --brand-blue-dark-1: #151A26;
   --brand-blue-dark-2: #040A19;
 
-  --brand-yellow-base: #FFC125;
-  --brand-yellow-light: #FFE4A0;
+  --brand-yellow-base: #e8314a;
+  --brand-yellow-light: #f5a0aa;
 
   --brand-ocean-blue-base: #1dc2ae;
   --brand-ocean-blue-light: #29e1cb;
@@ -35,5 +35,5 @@
   --other-red-light-1: #f9dede;
   --other-yellow-base: #fad980;
   --other-yellow-light: #fff1d2;
-  --other-yellow-neon: #ff0;
+  --other-yellow-neon: #ff3333;
 }
