@@ -14,7 +14,7 @@
   }
 
   .title {
-    background-color: var(--brand-yellow-base);
+    background-color: var(--brand-red-base);
     border-radius: 4px;
     color: var(--brand-blue-dark-1);
     font-family: var(--font-family-heading);

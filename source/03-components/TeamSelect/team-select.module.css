@@ -13,14 +13,14 @@
   .team-select {
     &:has(:focus-visible) {
       :global(.control) {
-        outline: 2px solid var(--brand-yellow-base) !important;
+        outline: 2px solid var(--brand-red-base) !important;
         outline-offset: 2px;
       }
     }
 
     :global(.control) {
       background-color: rgba(0 0 0 / 40%) !important;
-      border: solid 2px var(--brand-yellow-base) !important;
+      border: solid 2px var(--brand-red-base) !important;
       border-radius: 4px;
       box-shadow: none !important;
       cursor: pointer !important;
@@ -42,11 +42,11 @@
       cursor: pointer !important;
 
       &[class*='is-focused'] {
-        background-color: var(--brand-yellow-light) !important;
+        background-color: var(--brand-red-light) !important;
       }
 
       &[class*='is-selected'] {
-        background-color: var(--brand-yellow-base) !important;
+        background-color: var(--brand-red-base) !important;
       }
     }
 

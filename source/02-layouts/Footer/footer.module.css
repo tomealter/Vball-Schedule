@@ -19,7 +19,7 @@
   .logo {
     block-size: 36px;
     border-right: solid 1px var(--grayscale-white);
-    color: var(--brand-yellow-base);
+    color: var(--brand-red-base);
     inline-size: 66px;
     margin-inline-end: var(--spacing-2);
     padding-inline-end: var(--spacing-2);

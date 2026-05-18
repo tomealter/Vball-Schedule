@@ -25,16 +25,16 @@
   --table-background-head: var(--grayscale-gray-1);
   --table-border: var(--grayscale-gray-5);
 
-  --text-link: var(--brand-yellow-base);
-  --text-link-active: var(--brand-yellow-light);
-  --text-link-hover: var(--brand-yellow-light);
-  --text-link-visited: var(--brand-yellow-base);
+  --text-link: var(--brand-red-base);
+  --text-link-active: var(--brand-red-light);
+  --text-link-hover: var(--brand-red-light);
+  --text-link-visited: var(--brand-red-base);
   --text-on-dark: var(--grayscale-white);
   --text-on-light: var(--brand-blue-dark-1);
   --text-primary: var(--grayscale-white);
   --text-secondary: var(--grayscale-gray-5);
 
-  --ui-accent: var(--brand-yellow-base);
+  --ui-accent: var(--brand-red-base);
   --ui-accent-dark: var(--brand-blue-dark-1);
   --ui-accent-light: var(--brand-blue-light);
   --ui-background: var(--grayscale-gray-3);
@@ -43,7 +43,7 @@
   --ui-border: var(--grayscale-gray-3);
   --ui-border-dark: var(--grayscale-gray-6);
   --ui-border-light: var(--grayscale-gray-1);
-  --ui-focus: var(--brand-yellow-light);
+  --ui-focus: var(--brand-red-light);
   --ui-text-dark: var(--grayscale-gray-5);
   --ui-text-light: var(--grayscale-gray-3);
 }

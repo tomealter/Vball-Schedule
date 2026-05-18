@@ -1,7 +1,7 @@
 @import 'mixins';
 
 a {
-  @include focus(var(--brand-yellow-base));
+  @include focus(var(--brand-red-base));
 
   background-color: transparent;
   color: var(--text-link);
