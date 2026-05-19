@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A Next.js 14 (App Router) volleyball schedule viewer for the BB Division 1 league at Fairfax Sportsplex. It pulls schedule and standings data live from two Google Sheets via the Sheets API v4 and renders them client-side with team filtering.
 
+## General instructions
+
+After making any code changes, always run `npm run test` (lint + type-checking) and fix any errors before finishing.
+
 ## Commands
 
 ```bash
