@@ -31,7 +31,7 @@
   }
 
   .day {
-    color: var(--brand-yellow-base);
+    color: var(--other-red-base);
     font-family: var(--font-family-heading);
     font-size: var(--responsive-font-size-14);
     line-height: 1;
@@ -94,7 +94,7 @@
     transition: color 350ms ease-in-out;
 
     &[data-active='true'] {
-      color: var(--brand-yellow-base);
+      color: var(--other-red-base);
       font-weight: 700;
     }
 

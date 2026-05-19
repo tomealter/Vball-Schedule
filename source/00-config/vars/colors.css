@@ -14,8 +14,8 @@
   --button-text-disabled: var(--grayscale-gray-3);
   --button-text-hover: var(--grayscale-white);
 
-  --mark-background: var(--other-yellow-neon);
-  --mark-text: var(--grayscale-gray-7);
+  --mark-background: var(--other-red-base);
+  --mark-text: var(--grayscale-white);
 
   --selection-background: var(--brand-blue-base);
   --selection-text: var(--grayscale-white);
@@ -34,7 +34,7 @@
   --text-primary: var(--grayscale-white);
   --text-secondary: var(--grayscale-gray-5);
 
-  --ui-accent: var(--brand-yellow-base);
+  --ui-accent: var(--other-red-base);
   --ui-accent-dark: var(--brand-blue-dark-1);
   --ui-accent-light: var(--brand-blue-light);
   --ui-background: var(--grayscale-gray-3);
@@ -43,7 +43,7 @@
   --ui-border: var(--grayscale-gray-3);
   --ui-border-dark: var(--grayscale-gray-6);
   --ui-border-light: var(--grayscale-gray-1);
-  --ui-focus: var(--brand-yellow-light);
+  --ui-focus: var(--other-red-light-1);
   --ui-text-dark: var(--grayscale-gray-5);
   --ui-text-light: var(--grayscale-gray-3);
 }
