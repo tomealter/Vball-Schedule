@@ -10,6 +10,10 @@ A Next.js 14 (App Router) volleyball schedule viewer for the BB Division 1 leagu
 
 After making any code changes, always run `npm run test` (lint + type-checking) and fix any errors before finishing.
 
+Keep code comments short and terse — 1-2 lines max.
+
+Never commit without explicit approval. Ask first.
+
 ## Commands
 
 ```bash
