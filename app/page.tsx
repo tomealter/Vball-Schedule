@@ -26,20 +26,18 @@ export interface ParsedStanding {
   weeklyWins: (number | undefined)[];
 }
 
-const MONTHS = new Set([
-  'JANUARY',
-  'FEBRUARY',
-  'MARCH',
-  'APRIL',
-  'MAY',
-  'JUNE',
-  'JULY',
-  'AUGUST',
-  'SEPTEMBER',
-  'OCTOBER',
-  'NOVEMBER',
-  'DECEMBER',
-]);
+// Match cells look like "5 V 6"; also tolerates "5 vs 6" / "5 v. 6"
+const MATCH_RE = /^\s*\d+\s*vs?\.?\s*\d+\s*$/i;
+
+// Column 0 of a game row holds its time, e.g. "7:00 PM"
+const TIME_RE = /^\s*(\d{1,2})(?::\d{2})*\s*([AP]M)\s*$/i;
+
+// Slot order must stay in sync with GAME_TIMES in Matches.tsx
+const SLOT_TIMES = ['7PM', '8PM', '9PM', '10PM'];
+
+// Date rows sit 2 rows above their block of game rows
+const DATE_ROW_OFFSET = 2;
+const DATE_COLUMNS = [1, 2, 3];
 
 function parseTeamList(rows: string[][]): string[] {
   const teams: string[] = [];
@@ -53,27 +51,55 @@ function parseTeamList(rows: string[][]): string[] {
   return teams;
 }
 
+// "7:00 PM" -> "7PM", so odd spacing or seconds still resolve to a slot
+function normalizeTime(value: string): string {
+  const parts = TIME_RE.exec(value);
+  return parts ? `${parseInt(parts[1], 10)}${parts[2].toUpperCase()}` : '';
+}
+
+// A game row is one carrying a time label or a match; either signal is enough,
+// so a slot with no games that week still holds the block together.
+function isGameRow(row: string[] | undefined): boolean {
+  if (!row) return false;
+  return (
+    normalizeTime(row[0] ?? '') !== '' ||
+    DATE_COLUMNS.some(col => MATCH_RE.test(row[col] ?? ''))
+  );
+}
+
+// Anchors on blocks of game rows rather than on the date text, so typos in the
+// sheet's month names ("AUGUAT") can't drop a week of games.
 function parseSchedule(rows: string[][]): ParsedMatch[] {
   const schedule: ParsedMatch[] = [];
   let weekIndex = 0;
+
   rows.forEach((row, index) => {
-    if (row[1] && MONTHS.has(row[1].split(' ')[0])) {
-      for (let i = 0; i <= 3; i++) {
-        if (row[i]) {
-          schedule.push({
-            date: row[i],
-            weekIndex: weekIndex++,
-            matches: [
-              rows[index + 2]?.[i] ?? '',
-              rows[index + 3]?.[i] ?? '',
-              rows[index + 4]?.[i] ?? '',
-              rows[index + 5]?.[i] ?? '',
-            ],
-          });
-        }
-      }
+    // Only act on the first row of each block
+    if (!isGameRow(row) || isGameRow(rows[index - 1])) return;
+
+    const dateRow = rows[index - DATE_ROW_OFFSET];
+    if (!dateRow) return;
+
+    const blockRows: string[][] = [];
+    for (let offset = 0; isGameRow(rows[index + offset]); offset++) {
+      blockRows.push(rows[index + offset]);
     }
+
+    DATE_COLUMNS.forEach(col => {
+      if (!dateRow[col]) return;
+
+      const matches: string[] = new Array(SLOT_TIMES.length).fill('');
+      blockRows.forEach((blockRow, position) => {
+        // Unrecognized times fall back to the row's position in the block
+        const named = SLOT_TIMES.indexOf(normalizeTime(blockRow[0] ?? ''));
+        const slot = named === -1 ? position : named;
+        if (slot < matches.length) matches[slot] = blockRow[col] ?? '';
+      });
+
+      schedule.push({ date: dateRow[col], weekIndex: weekIndex++, matches });
+    });
   });
+
   return schedule;
 }
 

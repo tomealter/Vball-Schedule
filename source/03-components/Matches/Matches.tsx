@@ -13,18 +13,19 @@ interface MatchesProps {
 function Matches({ data, activeTeam, teamList, standings }: MatchesProps) {
   const standingsMap = Object.fromEntries(standings.map(s => [s.team, s.weeklyWins]));
 
-  // Function to render date
+  // Renders whatever the sheet gives us; date text is unvalidated and may be typo'd
   const renderDate = (date: string) => {
-    const dateSplit = date.split(' ');
-    const month = dateSplit[0];
-    const day = !Number.isNaN(parseInt(dateSplit[1].substring(0, 2)))
-      ? parseInt(dateSplit[1].substring(0, 2))
-      : parseInt(dateSplit[2].substring(0, 2)); // Fallback for date typo..
+    const tokens = date.trim().split(/\s+/);
+    const month = tokens[0] ?? '';
+    // First token containing a digit is the day, wherever it lands
+    const day = parseInt(tokens.slice(1).find(t => /\d/.test(t)) ?? '', 10);
 
     return (
       <div className={styles.date}>
         <span className={styles.month}>{month.substring(0, 3)}</span>
-        <span className={styles.day}>{day < 10 ? `0${day}` : day}</span>
+        {!Number.isNaN(day) && (
+          <span className={styles.day}>{day < 10 ? `0${day}` : day}</span>
+        )}
       </div>
     );
   };
