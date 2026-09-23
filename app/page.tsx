@@ -1,9 +1,9 @@
 import PageTitle from '@/source/03-components/PageTitle/PageTitle';
 import Schedule from '@/source/03-components/Schedule/Schedule';
 import Page from '@/source/04-templates/Page/Page';
-import { JSX } from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { JSX } from 'react';
 import Section from '../source/02-layouts/Section/Section';
 
 const title = 'BB Division 1 Schedule';
@@ -103,20 +103,43 @@ function parseSchedule(rows: string[][]): ParsedMatch[] {
   return schedule;
 }
 
-function parseStandings(rows: string[][], teamList: string[]): ParsedStanding[] {
+// Standings names can carry trailing annotations the schedule sheet doesn't,
+// e.g. "SAFE SETS          1ST PLACE", so match on the team name as a prefix.
+// Longest match wins in case one team's name is a prefix of another's.
+function matchTeam(
+  cell: string | undefined,
+  teamList: string[],
+): string | undefined {
+  const name = (cell ?? '').trim().replace(/\s+/g, ' ').toUpperCase();
+  if (!name) return undefined;
+  return teamList
+    .filter(team => {
+      const t = team.trim().replace(/\s+/g, ' ').toUpperCase();
+      return name === t || name.startsWith(`${t} `);
+    })
+    .sort((a, b) => b.length - a.length)[0];
+}
+
+function parseStandings(
+  rows: string[][],
+  teamList: string[],
+): ParsedStanding[] {
   const standings: ParsedStanding[] = [];
   rows.forEach(row => {
-    if (teamList.includes(row[1])) {
+    const team = matchTeam(row[1], teamList);
+    if (team) {
       // Cols: [num, name, g1wins, g1losses, g2wins, g2losses, ..., totalWins, totalLosses]
       // Game week pairs start at index 2; last two cols are totals
       const numGameWeeks = Math.floor((row.length - 4) / 2);
       const weeklyWins: (number | undefined)[] = [];
       for (let g = 0; g < numGameWeeks; g++) {
         const val = row[2 + g * 2];
-        weeklyWins.push(val !== undefined && val !== '' ? parseInt(val, 10) : undefined);
+        weeklyWins.push(
+          val !== undefined && val !== '' ? parseInt(val, 10) : undefined,
+        );
       }
       standings.push({
-        team: row[1],
+        team,
         wins: parseInt(row[row.length - 2], 10),
         losses: parseInt(row[row.length - 1], 10),
         weeklyWins,
