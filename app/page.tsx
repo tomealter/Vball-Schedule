@@ -103,10 +103,17 @@ function parseSchedule(rows: string[][]): ParsedMatch[] {
   return schedule;
 }
 
+// Standings sheet names are matched loosely since minor formatting drift
+// (case, stray whitespace) between the two sheets shouldn't drop a team.
+const normalizeTeamName = (value: string): string => value.trim().toLowerCase();
+
 function parseStandings(rows: string[][], teamList: string[]): ParsedStanding[] {
   const standings: ParsedStanding[] = [];
   rows.forEach(row => {
-    if (teamList.includes(row[1])) {
+    const team = teamList.find(
+      t => normalizeTeamName(t) === normalizeTeamName(row[1] ?? ''),
+    );
+    if (team) {
       // Cols: [num, name, g1wins, g1losses, g2wins, g2losses, ..., totalWins, totalLosses]
       // Game week pairs start at index 2; last two cols are totals
       const numGameWeeks = Math.floor((row.length - 4) / 2);
@@ -116,7 +123,8 @@ function parseStandings(rows: string[][], teamList: string[]): ParsedStanding[] 
         weeklyWins.push(val !== undefined && val !== '' ? parseInt(val, 10) : undefined);
       }
       standings.push({
-        team: row[1],
+        // Store the schedule sheet's spelling so it matches teamList elsewhere
+        team,
         wins: parseInt(row[row.length - 2], 10),
         losses: parseInt(row[row.length - 1], 10),
         weeklyWins,
